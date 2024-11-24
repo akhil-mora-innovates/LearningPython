@@ -5,12 +5,12 @@ import altair as alt
 # Set Streamlit page configuration
 st.set_page_config(page_title="CRM Dashboard", layout="wide")
 
-# Layout for first row (2 columns), making the KPI column smaller and the chart column larger
-col1, col2 = st.columns([2, 3])  # Column 1 takes 1/3, Column 2 takes 2/3
+# Layout for first row (2 columns), with 40% for KPIs and 60% for the chart
+col1, col2 = st.columns([2, 3])  # Column 1 takes 40%, Column 2 takes 60%
 
 # First column of the first row: 6 KPIs (2 rows, 3 columns)
 with col1:
-    # Create 2x3 grid for KPIs
+    # Create 2x3 grid for KPIs (reduce height for uniformity)
     row1_col1, row1_col2, row1_col3 = st.columns(3)
     with row1_col1:
         st.metric(label="New Leads", value="120", delta="+10%")
@@ -21,7 +21,7 @@ with col1:
     with row1_col3:
         st.metric(label="Deals Closed", value="45", delta="+20%")
 
-    # Second row of KPIs
+    # Second row of KPIs (same height as first row for consistency)
     row2_col1, row2_col2, row2_col3 = st.columns(3)
     with row2_col1:
         st.metric(label="Total Revenue", value="$50K", delta="+15%")
@@ -31,6 +31,9 @@ with col1:
     
     with row2_col3:
         st.metric(label="Avg Deal Size", value="$1.1K", delta="+8%")
+
+    # Adding some vertical spacing to match the height with the chart (optional)
+    st.write("")  # Empty space between KPI and the chart
 
 # Second column of the first row: Sales Performance Chart
 with col2:
@@ -53,7 +56,7 @@ with col2:
         y=alt.Y("Count", title="Number of Leads"),
         tooltip=["Stage", "Count"]
     ).properties(
-        width=500,  # Make the chart wider
+        width=800,  # Make the chart wider
         height=400
     ).configure_axis(
         labelFontSize=12,
