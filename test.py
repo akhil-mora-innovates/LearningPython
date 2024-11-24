@@ -49,6 +49,13 @@ st.markdown(
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
         margin: 10px;
     }
+    .chart-title {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333333;
+        text-align: center;
+        margin-bottom: 20px;
+    }
 
     /* Sidebar Styling */
     [data-testid="stSidebar"] {
@@ -116,7 +123,7 @@ with row1_col2:
 
     # Styled container for chart and title
     st.markdown('<div class="chart-container">', unsafe_allow_html=True)
-    st.markdown("### Sales Performance Chart", unsafe_allow_html=True)
+    st.markdown('<div class="chart-title">Sales Performance Chart</div>', unsafe_allow_html=True)
     st.bar_chart(data.set_index("Stage"))
     st.markdown('</div>', unsafe_allow_html=True)
 
