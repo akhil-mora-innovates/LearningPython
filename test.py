@@ -6,7 +6,7 @@ import altair as alt
 st.set_page_config(page_title="CRM Dashboard", layout="wide")
 
 # Layout for first row (2 columns), making the KPI column smaller and the chart column larger
-col1, col2 = st.columns([1, 2])  # Column 1 takes 1/3, Column 2 takes 2/3
+col1, col2 = st.columns([2, 3])  # Column 1 takes 1/3, Column 2 takes 2/3
 
 # First column of the first row: 6 KPIs (2 rows, 3 columns)
 with col1:
