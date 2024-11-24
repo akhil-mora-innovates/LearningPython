@@ -67,86 +67,95 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Layout for KPI widgets
+# Layout for first row (2 columns)
 col1, col2 = st.columns(2)
 
-# First row of KPIs (2 widgets)
+# First column of the first row: 6 KPIs (2 rows, 3 columns)
 with col1:
-    st.markdown('<div class="kpi-widget">', unsafe_allow_html=True)
-    st.markdown('<div class="kpi-title">New Leads</div>', unsafe_allow_html=True)
-    st.markdown('<div class="kpi-value">120</div>', unsafe_allow_html=True)
-    st.markdown('<div class="kpi-delta">+10%</div>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
+    # First row of KPIs
+    row1_col1, row1_col2, row1_col3 = st.columns(3)
+    with row1_col1:
+        st.markdown('<div class="kpi-widget">', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-title">New Leads</div>', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-value">120</div>', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-delta">+10%</div>', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
+    
+    with row1_col2:
+        st.markdown('<div class="kpi-widget">', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-title">Follow-ups</div>', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-value">80</div>', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-negative">-5%</div>', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
+    
+    with row1_col3:
+        st.markdown('<div class="kpi-widget">', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-title">Deals Closed</div>', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-value">45</div>', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-delta">+20%</div>', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
 
+    # Second row of KPIs
+    row2_col1, row2_col2, row2_col3 = st.columns(3)
+    with row2_col1:
+        st.markdown('<div class="kpi-widget">', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-title">Total Revenue</div>', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-value">$50K</div>', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-delta">+15%</div>', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
+    
+    with row2_col2:
+        st.markdown('<div class="kpi-widget">', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-title">Pending Tasks</div>', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-value">32</div>', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-negative">-2%</div>', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
+    
+    with row2_col3:
+        st.markdown('<div class="kpi-widget">', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-title">Avg Deal Size</div>', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-value">$1.1K</div>', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-delta">+8%</div>', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
+
+# Second column of the first row: Sales Performance Chart
 with col2:
-    st.markdown('<div class="kpi-widget">', unsafe_allow_html=True)
-    st.markdown('<div class="kpi-title">Follow-ups</div>', unsafe_allow_html=True)
-    st.markdown('<div class="kpi-value">80</div>', unsafe_allow_html=True)
-    st.markdown('<div class="kpi-negative">-5%</div>', unsafe_allow_html=True)
+    # Data for the chart
+    data = pd.DataFrame({
+        "Stage": ["Prospecting", "Qualified", "Proposal Sent", "Negotiation", "Won"],
+        "Count": [150, 120, 90, 50, 30]
+    })
+
+    # Ensure stages are ordered as defined in the dataframe
+    data["Stage"] = pd.Categorical(
+        data["Stage"],
+        categories=["Prospecting", "Qualified", "Proposal Sent", "Negotiation", "Won"],
+        ordered=True
+    )
+
+    # Create Altair Chart
+    chart = alt.Chart(data).mark_bar(cornerRadiusTopLeft=5, cornerRadiusTopRight=5).encode(
+        x=alt.X("Stage", sort="x", title="Sales Stages"),
+        y=alt.Y("Count", title="Number of Leads"),
+        tooltip=["Stage", "Count"]
+    ).properties(
+        width=500,
+        height=400
+    ).configure_axis(
+        labelFontSize=12,
+        titleFontSize=14
+    )
+
+    # Styled container for chart and title
+    st.markdown('<div class="chart-container">', unsafe_allow_html=True)
+    st.markdown('<div class="chart-title">Sales Performance Chart</div>', unsafe_allow_html=True)
+    st.altair_chart(chart, use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
-# Second row of KPIs (2 widgets)
-col3, col4 = st.columns(2)
+# Placeholder for second row
+st.markdown('### Second Row')
+st.markdown('Placeholder for second row widgets.')
 
-with col3:
-    st.markdown('<div class="kpi-widget">', unsafe_allow_html=True)
-    st.markdown('<div class="kpi-title">Deals Closed</div>', unsafe_allow_html=True)
-    st.markdown('<div class="kpi-value">45</div>', unsafe_allow_html=True)
-    st.markdown('<div class="kpi-delta">+20%</div>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
-
-with col4:
-    st.markdown('<div class="kpi-widget">', unsafe_allow_html=True)
-    st.markdown('<div class="kpi-title">Total Revenue</div>', unsafe_allow_html=True)
-    st.markdown('<div class="kpi-value">$50K</div>', unsafe_allow_html=True)
-    st.markdown('<div class="kpi-delta">+15%</div>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
-
-# Third row of KPIs (2 widgets)
-col5, col6 = st.columns(2)
-
-with col5:
-    st.markdown('<div class="kpi-widget">', unsafe_allow_html=True)
-    st.markdown('<div class="kpi-title">Pending Tasks</div>', unsafe_allow_html=True)
-    st.markdown('<div class="kpi-value">32</div>', unsafe_allow_html=True)
-    st.markdown('<div class="kpi-negative">-2%</div>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
-
-with col6:
-    st.markdown('<div class="kpi-widget">', unsafe_allow_html=True)
-    st.markdown('<div class="kpi-title">Avg Deal Size</div>', unsafe_allow_html=True)
-    st.markdown('<div class="kpi-value">$1.1K</div>', unsafe_allow_html=True)
-    st.markdown('<div class="kpi-delta">+8%</div>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
-
-# Data for the chart
-data = pd.DataFrame({
-    "Stage": ["Prospecting", "Qualified", "Proposal Sent", "Negotiation", "Won"],
-    "Count": [150, 120, 90, 50, 30]
-})
-
-# Ensure stages are ordered as defined in the dataframe
-data["Stage"] = pd.Categorical(
-    data["Stage"],
-    categories=["Prospecting", "Qualified", "Proposal Sent", "Negotiation", "Won"],
-    ordered=True
-)
-
-# Create Altair Chart
-chart = alt.Chart(data).mark_bar(cornerRadiusTopLeft=5, cornerRadiusTopRight=5).encode(
-    x=alt.X("Stage", sort="x", title="Sales Stages"),
-    y=alt.Y("Count", title="Number of Leads"),
-    tooltip=["Stage", "Count"]
-).properties(
-    width=500,
-    height=400
-).configure_axis(
-    labelFontSize=12,
-    titleFontSize=14
-)
-
-# Styled container for chart and title
-st.markdown('<div class="chart-container">', unsafe_allow_html=True)
-st.markdown('<div class="chart-title">Sales Performance Chart</div>', unsafe_allow_html=True)
-st.altair_chart(chart, use_container_width=True)
-st.markdown('</div>', unsafe_allow_html=True)
+# Placeholder for third row
+st.markdown('### Third Row')
+st.markdown('Placeholder for third row widgets.')
