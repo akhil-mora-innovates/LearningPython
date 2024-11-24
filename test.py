@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 
-# Set Streamlit layout
+# Set Streamlit page configuration
 st.set_page_config(page_title="CRM Dashboard", layout="wide")
 
 # Define CSS for styling
@@ -61,6 +61,11 @@ st.markdown(
     /* Sidebar Styling */
     [data-testid="stSidebar"] {
         background-color: #ffffff; /* White Sidebar */
+    }
+
+    /* Ensure containers are properly sized */
+    .stContainer {
+        width: 100%;
     }
     </style>
     """,
