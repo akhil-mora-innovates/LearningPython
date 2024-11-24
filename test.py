@@ -2,59 +2,60 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# CSS styles for the app
+# CSS styles to mimic the template UI
 st.markdown("""
     <style>
-        .main-container {
-            background-color: #f5f5f5;
+        body {
+            background-color: #f9fafc;
+        }
+        .container {
             padding: 20px;
         }
         .kpi-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-right: 20px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
         }
         .kpi-card {
             background-color: white;
             border-radius: 10px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 15px;
-            flex: 1 1 calc(33% - 20px);
-            min-width: 150px;
             text-align: center;
         }
         .kpi-title {
-            font-size: 14px;
-            color: #6c757d;
-            margin-bottom: 5px;
+            font-size: 16px;
+            color: #6b7280;
+            margin-bottom: 8px;
         }
         .kpi-value {
             font-size: 24px;
             font-weight: bold;
-            color: #343a40;
+            color: #111827;
             margin-bottom: 5px;
         }
         .kpi-change {
             font-size: 14px;
-            color: #28a745; /* Green */
+            font-weight: bold;
+        }
+        .kpi-change.positive {
+            color: #22c55e;
         }
         .kpi-change.negative {
-            color: #dc3545; /* Red */
+            color: #ef4444;
         }
         .chart-container {
             background-color: white;
             border-radius: 10px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 15px;
-            width: 60%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
         }
     </style>
 """, unsafe_allow_html=True)
 
-# Layout for the first row
-st.markdown('<div class="main-container">', unsafe_allow_html=True)
-col1, col2 = st.columns([2, 3], gap="medium")
+# Layout for the first row (KPIs and Chart)
+st.markdown('<div class="container">', unsafe_allow_html=True)
+col1, col2 = st.columns([3, 4], gap="medium")
 
 # Column 1: KPIs
 with col1:
@@ -69,7 +70,7 @@ with col1:
     ]
 
     for kpi in kpis:
-        change_class = "kpi-change negative" if not kpi["positive"] else "kpi-change"
+        change_class = "kpi-change positive" if kpi["positive"] else "kpi-change negative"
         st.markdown(f"""
             <div class="kpi-card">
                 <div class="kpi-title">{kpi["title"]}</div>
@@ -82,7 +83,7 @@ with col1:
 # Column 2: Chart
 with col2:
     st.markdown('<div class="chart-container">', unsafe_allow_html=True)
-    st.markdown('<h4 style="margin-top: 0;">Sales Performance Chart</h4>', unsafe_allow_html=True)
+    st.markdown('<h4 style="margin-top: 0; color: #111827;">Sales Performance</h4>', unsafe_allow_html=True)
 
     # Dummy data for the chart
     data = pd.DataFrame({
@@ -92,10 +93,10 @@ with col2:
 
     # Plotting the chart
     fig, ax = plt.subplots(figsize=(6, 3))
-    ax.bar(data["Stage"], data["Number of Leads"], color="steelblue")
-    ax.set_title("Sales Stages")
-    ax.set_xlabel("Stages")
-    ax.set_ylabel("Number of Leads")
+    ax.bar(data["Stage"], data["Number of Leads"], color="#6366f1")
+    ax.set_title("Sales Stages", fontsize=14, color="#111827")
+    ax.set_xlabel("Stages", fontsize=12)
+    ax.set_ylabel("Number of Leads", fontsize=12)
     st.pyplot(fig)
     st.markdown('</div>', unsafe_allow_html=True)
 
