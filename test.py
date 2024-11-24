@@ -99,10 +99,8 @@ with row1_col1:
     with col6:
         kpi_widget("Avg Deal Size", "$1.1K", "+8%")
 
-# Row 1, Column 2: Chart with Styling
+# Row 1, Column 2: Chart with Proper Styling
 with row1_col2:
-    st.markdown("### Sales Performance Chart")
-
     # Define data with ordered stages
     data = pd.DataFrame({
         "Stage": ["Prospecting", "Qualified", "Proposal Sent", "Negotiation", "Won"],
@@ -116,8 +114,9 @@ with row1_col2:
         ordered=True
     )
 
-    # Add chart container styling
+    # Styled container for chart and title
     st.markdown('<div class="chart-container">', unsafe_allow_html=True)
+    st.markdown("### Sales Performance Chart", unsafe_allow_html=True)
     st.bar_chart(data.set_index("Stage"))
     st.markdown('</div>', unsafe_allow_html=True)
 
