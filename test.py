@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# CSS styles to mimic the template UI
+# CSS styles to enhance layout and align with the template
 st.markdown("""
     <style>
         body {
@@ -13,7 +13,8 @@ st.markdown("""
         }
         .kpi-container {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(3, 1fr); /* 3 columns */
+            grid-template-rows: repeat(2, 1fr); /* 2 rows */
             gap: 15px;
         }
         .kpi-card {
@@ -57,7 +58,7 @@ st.markdown("""
 st.markdown('<div class="container">', unsafe_allow_html=True)
 col1, col2 = st.columns([3, 4], gap="medium")
 
-# Column 1: KPIs
+# Column 1: KPIs (2 rows x 3 columns)
 with col1:
     st.markdown('<div class="kpi-container">', unsafe_allow_html=True)
     kpis = [
