@@ -13,30 +13,24 @@ with col1:
     # Create 2x3 grid for KPIs
     row1_col1, row1_col2, row1_col3 = st.columns(3)
     with row1_col1:
-        st.subheader("New Leads")
-        st.metric("120", "+10%")
+        st.metric(label="New Leads", value="120", delta="+10%")
     
     with row1_col2:
-        st.subheader("Follow-ups")
-        st.metric("80", "-5%")
+        st.metric(label="Follow-ups", value="80", delta="-5%")
     
     with row1_col3:
-        st.subheader("Deals Closed")
-        st.metric("45", "+20%")
+        st.metric(label="Deals Closed", value="45", delta="+20%")
 
     # Second row of KPIs
     row2_col1, row2_col2, row2_col3 = st.columns(3)
     with row2_col1:
-        st.subheader("Total Revenue")
-        st.metric("$50K", "+15%")
+        st.metric(label="Total Revenue", value="$50K", delta="+15%")
     
     with row2_col2:
-        st.subheader("Pending Tasks")
-        st.metric("32", "-2%")
+        st.metric(label="Pending Tasks", value="32", delta="-2%")
     
     with row2_col3:
-        st.subheader("Avg Deal Size")
-        st.metric("$1.1K", "+8%")
+        st.metric(label="Avg Deal Size", value="$1.1K", delta="+8%")
 
 # Second column of the first row: Sales Performance Chart
 with col2:
