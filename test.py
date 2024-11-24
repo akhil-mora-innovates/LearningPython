@@ -5,8 +5,8 @@ import altair as alt
 # Set Streamlit page configuration
 st.set_page_config(page_title="CRM Dashboard", layout="wide")
 
-# Layout for first row (2 columns)
-col1, col2 = st.columns([2, 1])  # Column 1 takes 2/3 of the space, Column 2 takes 1/3
+# Layout for first row (2 columns), making the KPI column smaller and the chart column larger
+col1, col2 = st.columns([1, 2])  # Column 1 takes 1/3, Column 2 takes 2/3
 
 # First column of the first row: 6 KPIs (2 rows, 3 columns)
 with col1:
@@ -59,7 +59,7 @@ with col2:
         y=alt.Y("Count", title="Number of Leads"),
         tooltip=["Stage", "Count"]
     ).properties(
-        width=500,
+        width=700,  # Make the chart wider
         height=400
     ).configure_axis(
         labelFontSize=12,
