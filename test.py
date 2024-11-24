@@ -5,73 +5,6 @@ import altair as alt
 # Set Streamlit page configuration
 st.set_page_config(page_title="CRM Dashboard", layout="wide")
 
-# Define CSS for styling
-st.markdown(
-    """
-    <style>
-    /* Overall App Background Color */
-    body {
-        background-color: #f0f2f6; /* Light grayish blue */
-    }
-
-    /* Custom Style for KPI Widgets */
-    .kpi-widget {
-        background-color: white; /* Widget Background */
-        border-radius: 15px;
-        padding: 20px;
-        text-align: center;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-        margin: 10px;
-    }
-    .kpi-title {
-        font-size: 20px;
-        color: #333333;
-        font-weight: bold;
-        margin-bottom: 5px;
-    }
-    .kpi-value {
-        font-size: 30px;
-        color: #007BFF; /* Blue text */
-        font-weight: bold;
-    }
-    .kpi-delta {
-        font-size: 16px;
-        color: #28a745; /* Green for positive deltas */
-    }
-    .kpi-negative {
-        color: #dc3545; /* Red for negative deltas */
-    }
-
-    /* Chart Container Styling */
-    .chart-container {
-        background-color: white; /* Chart Background */
-        border-radius: 15px;
-        padding: 20px;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-        margin: 10px;
-    }
-    .chart-title {
-        font-size: 24px;
-        font-weight: bold;
-        color: #333333;
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    /* Sidebar Styling */
-    [data-testid="stSidebar"] {
-        background-color: #ffffff; /* White Sidebar */
-    }
-
-    /* Ensure containers are properly sized */
-    .stContainer {
-        width: 100%;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
 # Layout for first row (2 columns)
 col1, col2 = st.columns([2, 1])  # Column 1 takes 2/3 of the space, Column 2 takes 1/3
 
@@ -80,48 +13,30 @@ with col1:
     # Create 2x3 grid for KPIs
     row1_col1, row1_col2, row1_col3 = st.columns(3)
     with row1_col1:
-        st.markdown('<div class="kpi-widget">', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-title">New Leads</div>', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-value">120</div>', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-delta">+10%</div>', unsafe_allow_html=True)
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.subheader("New Leads")
+        st.metric("120", "+10%")
     
     with row1_col2:
-        st.markdown('<div class="kpi-widget">', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-title">Follow-ups</div>', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-value">80</div>', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-negative">-5%</div>', unsafe_allow_html=True)
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.subheader("Follow-ups")
+        st.metric("80", "-5%")
     
     with row1_col3:
-        st.markdown('<div class="kpi-widget">', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-title">Deals Closed</div>', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-value">45</div>', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-delta">+20%</div>', unsafe_allow_html=True)
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.subheader("Deals Closed")
+        st.metric("45", "+20%")
 
     # Second row of KPIs
     row2_col1, row2_col2, row2_col3 = st.columns(3)
     with row2_col1:
-        st.markdown('<div class="kpi-widget">', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-title">Total Revenue</div>', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-value">$50K</div>', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-delta">+15%</div>', unsafe_allow_html=True)
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.subheader("Total Revenue")
+        st.metric("$50K", "+15%")
     
     with row2_col2:
-        st.markdown('<div class="kpi-widget">', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-title">Pending Tasks</div>', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-value">32</div>', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-negative">-2%</div>', unsafe_allow_html=True)
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.subheader("Pending Tasks")
+        st.metric("32", "-2%")
     
     with row2_col3:
-        st.markdown('<div class="kpi-widget">', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-title">Avg Deal Size</div>', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-value">$1.1K</div>', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-delta">+8%</div>', unsafe_allow_html=True)
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.subheader("Avg Deal Size")
+        st.metric("$1.1K", "+8%")
 
 # Second column of the first row: Sales Performance Chart
 with col2:
@@ -151,11 +66,9 @@ with col2:
         titleFontSize=14
     )
 
-    # Styled container for chart and title
-    st.markdown('<div class="chart-container">', unsafe_allow_html=True)
-    st.markdown('<div class="chart-title">Sales Performance Chart</div>', unsafe_allow_html=True)
+    # Display Chart with Title
+    st.subheader("Sales Performance Chart")
     st.altair_chart(chart, use_container_width=True)
-    st.markdown('</div>', unsafe_allow_html=True)
 
 # Placeholder for second row
 st.markdown('### Second Row')
