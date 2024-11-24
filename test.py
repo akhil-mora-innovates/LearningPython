@@ -59,7 +59,7 @@ with col2:
         y=alt.Y("Count", title="Number of Leads"),
         tooltip=["Stage", "Count"]
     ).properties(
-        width=700,  # Make the chart wider
+        width=500,  # Make the chart wider
         height=400
     ).configure_axis(
         labelFontSize=12,
