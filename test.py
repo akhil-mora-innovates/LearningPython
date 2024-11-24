@@ -1,38 +1,36 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
 
-# Set page configuration
+# Set Streamlit layout
 st.set_page_config(page_title="CRM Dashboard", layout="wide")
 
-# Dashboard title
-st.title("🚀 Next-Gen CRM Dashboard")
+# Create layout with 3 rows and 2 columns
+row1_col1, row1_col2 = st.columns(2)
 
-# First Row: KPIs and Chart
-st.markdown("### Overview: Key Performance Indicators (KPIs)")
+# Row 1, Column 1: KPIs in a 2x3 grid
+with row1_col1:
+    st.markdown("### Key Performance Indicators")
+    col1, col2, col3 = st.columns(3)  # First row of KPIs
+    col4, col5, col6 = st.columns(3)  # Second row of KPIs
 
-col1, col2 = st.columns(2)
+    # First Row of KPIs
+    col1.metric("New Leads", "120", "+10%")
+    col2.metric("Follow-ups", "80", "-5%")
+    col3.metric("Deals Closed", "45", "+20%")
 
-# Column 1: KPI Widgets
-with col1:
-    st.metric("Total Leads", "1,245")
-    st.metric("Qualified Leads", "845")
-    st.metric("Deals Won", "356")
-    st.metric("Follow-Up Tasks", "120")
-    st.metric("Average Lead Response Time", "2 hrs")
-    st.metric("Revenue (This Month)", "$45,670")
+    # Second Row of KPIs
+    col4.metric("Total Revenue", "$50K", "+15%")
+    col5.metric("Pending Tasks", "32", "-2%")
+    col6.metric("Avg Deal Size", "$1.1K", "+8%")
 
-# Column 2: Chart
-with col2:
-    st.markdown("#### Sales Pipeline Overview")
-    # Generate a sample chart (you can replace this with real data later)
+# Row 1, Column 2: Chart
+with row1_col2:
+    st.markdown("### Sales Performance Chart")
     data = pd.DataFrame({
         "Stage": ["Prospecting", "Qualified", "Proposal Sent", "Negotiation", "Won"],
         "Count": [150, 120, 90, 50, 30]
     })
-    fig, ax = plt.subplots()
-    ax.bar(data["Stage"], data["Count"], color="skyblue")
-    ax.set_title("Sales Pipeline Stages")
-    ax.set_ylabel("Number of Leads")
-    ax.set_xlabel("Stages")
-    st.pyplot(fig)
+    st.bar_chart(data.set_index("Stage"))
+
+# Example placeholders for Row 2 and Row 3 (to be filled later)
+st.write("Row 2 and Row 3 content goes here.")
