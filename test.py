@@ -1,48 +1,102 @@
 import streamlit as st
 import pandas as pd
-import altair as alt
+import matplotlib.pyplot as plt
 
-# Set up the layout
-st.set_page_config(layout="wide")
+# CSS styles for the app
+st.markdown("""
+    <style>
+        .main-container {
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        .kpi-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-right: 20px;
+        }
+        .kpi-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            flex: 1 1 calc(33% - 20px);
+            min-width: 150px;
+            text-align: center;
+        }
+        .kpi-title {
+            font-size: 14px;
+            color: #6c757d;
+            margin-bottom: 5px;
+        }
+        .kpi-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #343a40;
+            margin-bottom: 5px;
+        }
+        .kpi-change {
+            font-size: 14px;
+            color: #28a745; /* Green */
+        }
+        .kpi-change.negative {
+            color: #dc3545; /* Red */
+        }
+        .chart-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            width: 60%;
+        }
+    </style>
+""", unsafe_allow_html=True)
 
-# Dummy KPI Data
-kpi_data = [
-    {"label": "New Leads", "value": "120", "change": "+10%"},
-    {"label": "Follow-ups", "value": "80", "change": "-5%"},
-    {"label": "Deals Closed", "value": "45", "change": "+20%"},
-    {"label": "Total Revenue", "value": "$50K", "change": "+15%"},
-    {"label": "Pending Tasks", "value": "32", "change": "-2%"},
-    {"label": "Avg Deal Size", "value": "$1.1K", "change": "+8%"},
-]
+# Layout for the first row
+st.markdown('<div class="main-container">', unsafe_allow_html=True)
+col1, col2 = st.columns([2, 3], gap="medium")
 
-# Dummy Sales Data
-data = pd.DataFrame({
-    "Stage": ["Negotiation", "Proposal Sent", "Prospecting", "Qualified", "Won"],
-    "Number of Leads": [50, 80, 150, 120, 30],
-})
+# Column 1: KPIs
+with col1:
+    st.markdown('<div class="kpi-container">', unsafe_allow_html=True)
+    kpis = [
+        {"title": "New Leads", "value": "120", "change": "+10%", "positive": True},
+        {"title": "Follow-ups", "value": "80", "change": "-5%", "positive": False},
+        {"title": "Deals Closed", "value": "45", "change": "+20%", "positive": True},
+        {"title": "Total Revenue", "value": "$50K", "change": "+15%", "positive": True},
+        {"title": "Pending Tasks", "value": "32", "change": "-2%", "positive": False},
+        {"title": "Avg Deal Size", "value": "$1.1K", "change": "+8%", "positive": True},
+    ]
 
-# Create Layout: First Row with KPIs and Chart
-row1_col1, row1_col2 = st.columns([2, 3])
+    for kpi in kpis:
+        change_class = "kpi-change negative" if not kpi["positive"] else "kpi-change"
+        st.markdown(f"""
+            <div class="kpi-card">
+                <div class="kpi-title">{kpi["title"]}</div>
+                <div class="kpi-value">{kpi["value"]}</div>
+                <div class="{change_class}">{kpi["change"]}</div>
+            </div>
+        """, unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
-# KPIs Section
-with row1_col1:
-    kpi_col1, kpi_col2, kpi_col3 = st.columns(3)
-    for idx, kpi in enumerate(kpi_data):
-        with [kpi_col1, kpi_col2, kpi_col3][idx % 3]:
-            st.metric(label=kpi["label"], value=kpi["value"], delta=kpi["change"])
+# Column 2: Chart
+with col2:
+    st.markdown('<div class="chart-container">', unsafe_allow_html=True)
+    st.markdown('<h4 style="margin-top: 0;">Sales Performance Chart</h4>', unsafe_allow_html=True)
 
-# Chart Section
-with row1_col2:
-    st.markdown("### Sales Performance Chart")
-    chart = (
-        alt.Chart(data)
-        .mark_bar()
-        .encode(x="Stage", y="Number of Leads", tooltip=["Stage", "Number of Leads"])
-        .properties(height=300)
-    )
-    st.altair_chart(chart, use_container_width=True)
+    # Dummy data for the chart
+    data = pd.DataFrame({
+        "Stage": ["Negotiation", "Proposal Sent", "Prospecting", "Qualified", "Won"],
+        "Number of Leads": [30, 50, 100, 80, 20]
+    })
 
-st.divider()
+    # Plotting the chart
+    fig, ax = plt.subplots(figsize=(6, 3))
+    ax.bar(data["Stage"], data["Number of Leads"], color="steelblue")
+    ax.set_title("Sales Stages")
+    ax.set_xlabel("Stages")
+    ax.set_ylabel("Number of Leads")
+    st.pyplot(fig)
+    st.markdown('</div>', unsafe_allow_html=True)
 
-# Space for future rows
-st.write("Second and third rows coming soon...")
+st.markdown('</div>', unsafe_allow_html=True)
