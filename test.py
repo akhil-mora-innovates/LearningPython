@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# CSS styles to enhance layout and align with the template
+# CSS styles for layout consistency
 st.markdown("""
     <style>
         body {
@@ -16,6 +16,7 @@ st.markdown("""
             grid-template-columns: repeat(3, 1fr); /* 3 columns */
             grid-template-rows: repeat(2, 1fr); /* 2 rows */
             gap: 15px;
+            height: 100%; /* Ensures alignment with chart height */
         }
         .kpi-card {
             background-color: white;
@@ -50,16 +51,17 @@ st.markdown("""
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 20px;
+            height: 100%;
         }
     </style>
 """, unsafe_allow_html=True)
 
-# Layout for the first row (KPIs and Chart)
+# Main layout
 st.markdown('<div class="container">', unsafe_allow_html=True)
-col1, col2 = st.columns([3, 4], gap="medium")
+row1_col1, row1_col2 = st.columns([3, 4], gap="medium")  # First row split into 2 columns
 
-# Column 1: KPIs (2 rows x 3 columns)
-with col1:
+# Column 1: KPI Section (2 rows x 3 columns)
+with row1_col1:
     st.markdown('<div class="kpi-container">', unsafe_allow_html=True)
     kpis = [
         {"title": "New Leads", "value": "120", "change": "+10%", "positive": True},
@@ -70,6 +72,7 @@ with col1:
         {"title": "Avg Deal Size", "value": "$1.1K", "change": "+8%", "positive": True},
     ]
 
+    # Render KPIs
     for kpi in kpis:
         change_class = "kpi-change positive" if kpi["positive"] else "kpi-change negative"
         st.markdown(f"""
@@ -81,8 +84,8 @@ with col1:
         """, unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
-# Column 2: Chart
-with col2:
+# Column 2: Chart Section
+with row1_col2:
     st.markdown('<div class="chart-container">', unsafe_allow_html=True)
     st.markdown('<h4 style="margin-top: 0; color: #111827;">Sales Performance</h4>', unsafe_allow_html=True)
 
