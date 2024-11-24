@@ -67,6 +67,58 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+# Layout for KPI widgets
+col1, col2 = st.columns(2)
+
+# First row of KPIs (2 widgets)
+with col1:
+    st.markdown('<div class="kpi-widget">', unsafe_allow_html=True)
+    st.markdown('<div class="kpi-title">New Leads</div>', unsafe_allow_html=True)
+    st.markdown('<div class="kpi-value">120</div>', unsafe_allow_html=True)
+    st.markdown('<div class="kpi-delta">+10%</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+with col2:
+    st.markdown('<div class="kpi-widget">', unsafe_allow_html=True)
+    st.markdown('<div class="kpi-title">Follow-ups</div>', unsafe_allow_html=True)
+    st.markdown('<div class="kpi-value">80</div>', unsafe_allow_html=True)
+    st.markdown('<div class="kpi-negative">-5%</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+# Second row of KPIs (2 widgets)
+col3, col4 = st.columns(2)
+
+with col3:
+    st.markdown('<div class="kpi-widget">', unsafe_allow_html=True)
+    st.markdown('<div class="kpi-title">Deals Closed</div>', unsafe_allow_html=True)
+    st.markdown('<div class="kpi-value">45</div>', unsafe_allow_html=True)
+    st.markdown('<div class="kpi-delta">+20%</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+with col4:
+    st.markdown('<div class="kpi-widget">', unsafe_allow_html=True)
+    st.markdown('<div class="kpi-title">Total Revenue</div>', unsafe_allow_html=True)
+    st.markdown('<div class="kpi-value">$50K</div>', unsafe_allow_html=True)
+    st.markdown('<div class="kpi-delta">+15%</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+# Third row of KPIs (2 widgets)
+col5, col6 = st.columns(2)
+
+with col5:
+    st.markdown('<div class="kpi-widget">', unsafe_allow_html=True)
+    st.markdown('<div class="kpi-title">Pending Tasks</div>', unsafe_allow_html=True)
+    st.markdown('<div class="kpi-value">32</div>', unsafe_allow_html=True)
+    st.markdown('<div class="kpi-negative">-2%</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+with col6:
+    st.markdown('<div class="kpi-widget">', unsafe_allow_html=True)
+    st.markdown('<div class="kpi-title">Avg Deal Size</div>', unsafe_allow_html=True)
+    st.markdown('<div class="kpi-value">$1.1K</div>', unsafe_allow_html=True)
+    st.markdown('<div class="kpi-delta">+8%</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+
 # Data for the chart
 data = pd.DataFrame({
     "Stage": ["Prospecting", "Qualified", "Proposal Sent", "Negotiation", "Won"],
