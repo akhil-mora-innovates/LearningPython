@@ -4,16 +4,22 @@ import pandas as pd
 # Set Streamlit layout
 st.set_page_config(page_title="CRM Dashboard", layout="wide")
 
-# Define CSS for custom KPI styling
+# Define CSS for styling
 st.markdown(
     """
     <style>
+    /* Overall App Background Color */
+    body {
+        background-color: #f0f2f6; /* Light grayish blue */
+    }
+
+    /* Custom Style for KPI Widgets */
     .kpi-widget {
-        background-color: #f5f5f5;
+        background-color: white; /* Widget Background */
         border-radius: 15px;
         padding: 20px;
         text-align: center;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
         margin: 10px;
     }
     .kpi-title {
@@ -34,6 +40,21 @@ st.markdown(
     .kpi-negative {
         color: #dc3545; /* Red for negative deltas */
     }
+
+    /* Chart Container Styling */
+    .chart-container {
+        background-color: white; /* Chart Background */
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        margin: 10px;
+    }
+
+    /* Sidebar Styling */
+    [data-testid="stSidebar"] {
+        background-color: #ffffff; /* White Sidebar */
+    }
+
     </style>
     """,
     unsafe_allow_html=True,
@@ -78,10 +99,10 @@ with row1_col1:
     with col6:
         kpi_widget("Avg Deal Size", "$1.1K", "+8%")
 
-# Row 1, Column 2: Chart with Ordered Stages
+# Row 1, Column 2: Chart with Styling
 with row1_col2:
     st.markdown("### Sales Performance Chart")
-    
+
     # Define data with ordered stages
     data = pd.DataFrame({
         "Stage": ["Prospecting", "Qualified", "Proposal Sent", "Negotiation", "Won"],
@@ -94,9 +115,11 @@ with row1_col2:
         categories=["Prospecting", "Qualified", "Proposal Sent", "Negotiation", "Won"],
         ordered=True
     )
-    
-    # Plot the bar chart
-    st.bar_chart(data.set_index("Stage"))
 
-# Example placeholders for Row 2 and Row 3 (to be filled later)
+    # Add chart container styling
+    st.markdown('<div class="chart-container">', unsafe_allow_html=True)
+    st.bar_chart(data.set_index("Stage"))
+    st.markdown('</div>', unsafe_allow_html=True)
+
+# Placeholder for additional rows
 st.write("Row 2 and Row 3 content goes here.")
