@@ -73,11 +73,11 @@ st.markdown(
 )
 
 # Layout for first row (2 columns)
-col1, col2 = st.columns(2)
+col1, col2 = st.columns([2, 1])  # Column 1 takes 2/3 of the space, Column 2 takes 1/3
 
 # First column of the first row: 6 KPIs (2 rows, 3 columns)
 with col1:
-    # First row of KPIs
+    # Create 2x3 grid for KPIs
     row1_col1, row1_col2, row1_col3 = st.columns(3)
     with row1_col1:
         st.markdown('<div class="kpi-widget">', unsafe_allow_html=True)
