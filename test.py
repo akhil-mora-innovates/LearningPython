@@ -5,6 +5,35 @@ import altair as alt
 # Set Streamlit page configuration
 st.set_page_config(page_title="CRM Dashboard", layout="wide")
 
+# Apply CSS to handle layout and height adjustments
+st.markdown("""
+    <style>
+        /* Make sure columns have equal height using flexbox */
+        .css-18e3th9 {
+            display: flex;
+            align-items: stretch;
+        }
+
+        .css-1kyxreq {
+            height: 100%;
+        }
+
+        .stMetric {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .stColumn {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
 # Layout for first row (2 columns), with 40% for KPIs and 60% for the chart
 col1, col2 = st.columns([2, 3])  # Column 1 takes 40%, Column 2 takes 60%
 
@@ -31,9 +60,6 @@ with col1:
     
     with row2_col3:
         st.metric(label="Avg Deal Size", value="$1.1K", delta="+8%")
-
-    # Adding some vertical spacing to match the height with the chart (optional)
-    st.write("")  # Empty space between KPI and the chart
 
 # Second column of the first row: Sales Performance Chart
 with col2:
