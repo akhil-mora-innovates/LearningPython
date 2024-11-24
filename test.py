@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import altair as alt
 
 # Set Streamlit layout
 st.set_page_config(page_title="CRM Dashboard", layout="wide")
@@ -66,65 +67,34 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Create layout with 3 rows and 2 columns
-row1_col1, row1_col2 = st.columns(2)
+# Data for the chart
+data = pd.DataFrame({
+    "Stage": ["Prospecting", "Qualified", "Proposal Sent", "Negotiation", "Won"],
+    "Count": [150, 120, 90, 50, 30]
+})
 
-# Row 1, Column 1: KPIs in a 2x3 grid
-with row1_col1:
-    st.markdown("### Key Performance Indicators")
+# Ensure stages are ordered as defined in the dataframe
+data["Stage"] = pd.Categorical(
+    data["Stage"],
+    categories=["Prospecting", "Qualified", "Proposal Sent", "Negotiation", "Won"],
+    ordered=True
+)
 
-    # Helper function to render custom-styled KPIs
-    def kpi_widget(title, value, delta, delta_positive=True):
-        delta_class = "kpi-delta" if delta_positive else "kpi-delta kpi-negative"
-        st.markdown(
-            f"""
-            <div class="kpi-widget">
-                <div class="kpi-title">{title}</div>
-                <div class="kpi-value">{value}</div>
-                <div class="{delta_class}">{delta}</div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
+# Create Altair Chart
+chart = alt.Chart(data).mark_bar(cornerRadiusTopLeft=5, cornerRadiusTopRight=5).encode(
+    x=alt.X("Stage", sort="x", title="Sales Stages"),
+    y=alt.Y("Count", title="Number of Leads"),
+    tooltip=["Stage", "Count"]
+).properties(
+    width=500,
+    height=400
+).configure_axis(
+    labelFontSize=12,
+    titleFontSize=14
+)
 
-    # First Row of KPIs
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        kpi_widget("New Leads", "120", "+10%")
-    with col2:
-        kpi_widget("Follow-ups", "80", "-5%", delta_positive=False)
-    with col3:
-        kpi_widget("Deals Closed", "45", "+20%")
-
-    # Second Row of KPIs
-    col4, col5, col6 = st.columns(3)
-    with col4:
-        kpi_widget("Total Revenue", "$50K", "+15%")
-    with col5:
-        kpi_widget("Pending Tasks", "32", "-2%", delta_positive=False)
-    with col6:
-        kpi_widget("Avg Deal Size", "$1.1K", "+8%")
-
-# Row 1, Column 2: Chart with Proper Styling
-with row1_col2:
-    # Define data with ordered stages
-    data = pd.DataFrame({
-        "Stage": ["Prospecting", "Qualified", "Proposal Sent", "Negotiation", "Won"],
-        "Count": [150, 120, 90, 50, 30]
-    })
-
-    # Ensure stages are ordered as defined in the dataframe
-    data["Stage"] = pd.Categorical(
-        data["Stage"],
-        categories=["Prospecting", "Qualified", "Proposal Sent", "Negotiation", "Won"],
-        ordered=True
-    )
-
-    # Styled container for chart and title
-    st.markdown('<div class="chart-container">', unsafe_allow_html=True)
-    st.markdown('<div class="chart-title">Sales Performance Chart</div>', unsafe_allow_html=True)
-    st.altair_chart(data.set_index("Stage").plot(kind="bar", figsize=(10, 5)))
-    st.markdown('</div>', unsafe_allow_html=True)
-
-# Placeholder for additional rows
-st.write("Row 2 and Row 3 content goes here.")
+# Styled container for chart and title
+st.markdown('<div class="chart-container">', unsafe_allow_html=True)
+st.markdown('<div class="chart-title">Sales Performance Chart</div>', unsafe_allow_html=True)
+st.altair_chart(chart, use_container_width=True)
+st.markdown('</div>', unsafe_allow_html=True)
