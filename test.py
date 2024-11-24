@@ -78,13 +78,24 @@ with row1_col1:
     with col6:
         kpi_widget("Avg Deal Size", "$1.1K", "+8%")
 
-# Row 1, Column 2: Chart
+# Row 1, Column 2: Chart with Ordered Stages
 with row1_col2:
     st.markdown("### Sales Performance Chart")
+    
+    # Define data with ordered stages
     data = pd.DataFrame({
         "Stage": ["Prospecting", "Qualified", "Proposal Sent", "Negotiation", "Won"],
         "Count": [150, 120, 90, 50, 30]
     })
+
+    # Ensure stages are ordered as defined in the dataframe
+    data["Stage"] = pd.Categorical(
+        data["Stage"],
+        categories=["Prospecting", "Qualified", "Proposal Sent", "Negotiation", "Won"],
+        ordered=True
+    )
+    
+    # Plot the bar chart
     st.bar_chart(data.set_index("Stage"))
 
 # Example placeholders for Row 2 and Row 3 (to be filled later)
