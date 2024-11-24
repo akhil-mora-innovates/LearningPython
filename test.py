@@ -61,7 +61,6 @@ st.markdown(
     [data-testid="stSidebar"] {
         background-color: #ffffff; /* White Sidebar */
     }
-
     </style>
     """,
     unsafe_allow_html=True,
@@ -124,7 +123,7 @@ with row1_col2:
     # Styled container for chart and title
     st.markdown('<div class="chart-container">', unsafe_allow_html=True)
     st.markdown('<div class="chart-title">Sales Performance Chart</div>', unsafe_allow_html=True)
-    st.bar_chart(data.set_index("Stage"))
+    st.altair_chart(data.set_index("Stage").plot(kind="bar", figsize=(10, 5)))
     st.markdown('</div>', unsafe_allow_html=True)
 
 # Placeholder for additional rows
