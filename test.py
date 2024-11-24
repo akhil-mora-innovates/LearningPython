@@ -2,72 +2,47 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 
-# Set Streamlit page configuration
-st.set_page_config(page_title="CRM Dashboard", layout="wide")
+# Set up the layout
+st.set_page_config(layout="wide")
 
-# Layout for first row (2 columns), with 40% for KPIs and 60% for the chart
-col1, col2 = st.columns([2, 3])  # Column 1 takes 40%, Column 2 takes 60%
+# Dummy KPI Data
+kpi_data = [
+    {"label": "New Leads", "value": "120", "change": "+10%"},
+    {"label": "Follow-ups", "value": "80", "change": "-5%"},
+    {"label": "Deals Closed", "value": "45", "change": "+20%"},
+    {"label": "Total Revenue", "value": "$50K", "change": "+15%"},
+    {"label": "Pending Tasks", "value": "32", "change": "-2%"},
+    {"label": "Avg Deal Size", "value": "$1.1K", "change": "+8%"},
+]
 
-# First column of the first row: 6 KPIs (2 rows, 3 columns)
-with col1:
-    # Create 2x3 grid for KPIs (reduce height for uniformity)
-    row1_col1, row1_col2, row1_col3 = st.columns(3)
-    with row1_col1:
-        st.metric(label="New Leads", value="120", delta="+10%")
-    
-    with row1_col2:
-        st.metric(label="Follow-ups", value="80", delta="-5%")
-    
-    with row1_col3:
-        st.metric(label="Deals Closed", value="45", delta="+20%")
+# Dummy Sales Data
+data = pd.DataFrame({
+    "Stage": ["Negotiation", "Proposal Sent", "Prospecting", "Qualified", "Won"],
+    "Number of Leads": [50, 80, 150, 120, 30],
+})
 
-    # Second row of KPIs (same height as first row for consistency)
-    row2_col1, row2_col2, row2_col3 = st.columns(3)
-    with row2_col1:
-        st.metric(label="Total Revenue", value="$50K", delta="+15%")
-    
-    with row2_col2:
-        st.metric(label="Pending Tasks", value="32", delta="-2%")
-    
-    with row2_col3:
-        st.metric(label="Avg Deal Size", value="$1.1K", delta="+8%")
+# Create Layout: First Row with KPIs and Chart
+row1_col1, row1_col2 = st.columns([2, 3])
 
-# Second column of the first row: Sales Performance Chart
-with col2:
-    # Data for the chart
-    data = pd.DataFrame({
-        "Stage": ["Prospecting", "Qualified", "Proposal Sent", "Negotiation", "Won"],
-        "Count": [150, 120, 90, 50, 30]
-    })
+# KPIs Section
+with row1_col1:
+    kpi_col1, kpi_col2, kpi_col3 = st.columns(3)
+    for idx, kpi in enumerate(kpi_data):
+        with [kpi_col1, kpi_col2, kpi_col3][idx % 3]:
+            st.metric(label=kpi["label"], value=kpi["value"], delta=kpi["change"])
 
-    # Ensure stages are ordered as defined in the dataframe
-    data["Stage"] = pd.Categorical(
-        data["Stage"],
-        categories=["Prospecting", "Qualified", "Proposal Sent", "Negotiation", "Won"],
-        ordered=True
+# Chart Section
+with row1_col2:
+    st.markdown("### Sales Performance Chart")
+    chart = (
+        alt.Chart(data)
+        .mark_bar()
+        .encode(x="Stage", y="Number of Leads", tooltip=["Stage", "Number of Leads"])
+        .properties(height=300)
     )
-
-    # Create Altair Chart
-    chart = alt.Chart(data).mark_bar(cornerRadiusTopLeft=5, cornerRadiusTopRight=5).encode(
-        x=alt.X("Stage", sort="x", title="Sales Stages"),
-        y=alt.Y("Count", title="Number of Leads"),
-        tooltip=["Stage", "Count"]
-    ).properties(
-        width=800,  # Make the chart wider
-        height=400
-    ).configure_axis(
-        labelFontSize=12,
-        titleFontSize=14
-    )
-
-    # Display Chart with Title
-    st.subheader("Sales Performance Chart")
     st.altair_chart(chart, use_container_width=True)
 
-# Placeholder for second row
-st.markdown('### Second Row')
-st.markdown('Placeholder for second row widgets.')
+st.divider()
 
-# Placeholder for third row
-st.markdown('### Third Row')
-st.markdown('Placeholder for third row widgets.')
+# Space for future rows
+st.write("Second and third rows coming soon...")
